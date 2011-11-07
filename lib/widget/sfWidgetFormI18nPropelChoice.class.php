@@ -68,7 +68,14 @@ class sfWidgetFormI18nPropelChoice extends sfWidgetFormPropelChoice
 
     foreach ($choices as $key=>$choice)
     {
-      $choices_i18n[$key] = call_user_func_array(array($i18n, $i18n_method),$choice);
+      if(is_array($choice))
+	{
+	  $choices_i18n[$key] = call_user_func_array(array($i18n, $i18n_method),array($choice['i18n'],$choice['params']));
+	}
+      else
+	{
+	  $choices_i18n[$key] = call_user_func_array(array($i18n, $i18n_method),$choice);
+	}
     }
 
     return $choices_i18n;
