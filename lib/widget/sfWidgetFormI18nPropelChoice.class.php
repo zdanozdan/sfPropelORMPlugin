@@ -74,7 +74,7 @@ class sfWidgetFormI18nPropelChoice extends sfWidgetFormPropelChoice
 	}
       else
 	{
-	  $choices_i18n[$key] = call_user_func_array(array($i18n, $i18n_method),$choice);
+	  $choices_i18n[$key] = call_user_func_array(array($i18n, $i18n_method),array($choice));
 	}
     }
 
