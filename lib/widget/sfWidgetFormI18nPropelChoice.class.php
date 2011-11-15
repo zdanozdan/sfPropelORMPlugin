@@ -44,6 +44,7 @@ class sfWidgetFormI18nPropelChoice extends sfWidgetFormPropelChoice
   {
     $this->addRequiredOption('i18n');
     $this->addOption('i18n_method', '__');
+    $this->addOption('truncate', 30);
 
     parent::configure($options, $attributes);
   }
@@ -66,15 +67,17 @@ class sfWidgetFormI18nPropelChoice extends sfWidgetFormPropelChoice
     $choices = parent::getChoices();
     $choices_i18n = array();
 
+    sfContext::getInstance()->getConfiguration()->loadHelpers('Text');
+
     foreach ($choices as $key=>$choice)
     {
       if(is_array($choice))
 	{
-	  $choices_i18n[$key] = call_user_func_array(array($i18n, $i18n_method),array($choice['i18n'],$choice['params']));
+	  $choices_i18n[$key] = truncate_text(call_user_func_array(array($i18n, $i18n_method),array($choice['i18n'],$choice['params'])),$this->getOption('truncate'));
 	}
       else
 	{
-	  $choices_i18n[$key] = call_user_func_array(array($i18n, $i18n_method),array($choice));
+	  $choices_i18n[$key] = truncate_text(call_user_func_array(array($i18n, $i18n_method),array($choice)),$this->getOption('truncate'));
 	}
     }
 
